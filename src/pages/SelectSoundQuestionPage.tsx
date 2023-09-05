@@ -54,7 +54,7 @@ const SelectSoundQuestion: React.FC = () => {
     localStorage.getItem("selectedSymbolProgress") || "{}"
   );
 
-  const progress = selectedSymbolProgress[currentQuestion.symbol] || 0;
+  const progress = selectedSymbolProgress[currentQuestion?.symbol] || 0;
 
   const rankColor = getRankColor(progress);
 

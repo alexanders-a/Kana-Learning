@@ -54,7 +54,7 @@ const InputSoundQuestion = () => {
 
   const currentQuestion = selectedSymbols[currentQuestionIndex];
 
-  const progress = selectedSymbolProgress[currentQuestion.symbol] || 0;
+  const progress = selectedSymbolProgress[currentQuestion?.symbol] || 0;
 
   const rankColor = getRankColor(progress);
 
@@ -128,6 +128,7 @@ const InputSoundQuestion = () => {
       }
     }
   };
+
 
   return (
     <Center minHeight="100vh">
