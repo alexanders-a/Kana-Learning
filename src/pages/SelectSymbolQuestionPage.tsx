@@ -22,15 +22,20 @@ import { RootState } from "../types/types";
 import {
   getRandomUniqueIndex,
   getRankColor,
-  shuffleArrayOptions,
-} from "../utils/symbolSelectionUtils";
+  showRankUpdate,
+} from "../utils/trainingUtils";
+import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
 import BackButton from "../components/buttons/BackButton";
+import useKeyPress from "../hooks/useKeyPress";
 
 const SelectSymbolQuestion: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const goToHome = () => navigation("/");
   const toast = useToast();
+  const optionKeys = ["1", "2", "3", "4"];
+  const optionClicks = optionKeys.map(useKeyPress);
+  const nextPress = useKeyPress("Enter");
 
   const selectedSymbols = useSelector(
     (state: RootState) => state.training.questions
@@ -57,7 +62,6 @@ const SelectSymbolQuestion: React.FC = () => {
   const progress = selectedSymbolProgress[currentQuestion?.symbol] || 0;
 
   const rankColor = getRankColor(progress);
-
 
   useEffect(() => {
     dispatch(setQuestions(selectedSymbols));
@@ -127,19 +131,7 @@ const SelectSymbolQuestion: React.FC = () => {
         "selectedSymbolProgress",
         JSON.stringify(updatedProgress)
       );
-      if (progress === 99) {
-        showRankUpdateToast("Rank S");
-      } else if (progress === 70) {
-        showRankUpdateToast("Rank A");
-      } else if (progress === 50) {
-        showRankUpdateToast("Rank B");
-      } else if (progress === 20) {
-        showRankUpdateToast("Rank C");
-      } else if (progress === 5) {
-        showRankUpdateToast("Rank D");
-      } else if (progress === 1) {
-        showRankUpdateToast("Rank F");
-      }
+      showRankUpdate(progress, showRankUpdateToast);
     } else {
       dispatch(setShowAnswer(true));
     }
@@ -158,6 +150,22 @@ const SelectSymbolQuestion: React.FC = () => {
     generateOptions();
     dispatch(setIsCorrect(false));
   };
+
+  const handleOptionKeyPress = (optionIndex: number) => {
+    if (options[optionIndex]) {
+      handleOptionClick(options[optionIndex]);
+    }
+  };
+
+  useEffect(() => {
+    if (nextPress && showAnswer) {
+      handleNextQuestion();
+    }
+    optionClicks.forEach((optionClick, index) => {
+      if (optionClick) handleOptionKeyPress(index);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextPress, ...optionClicks]);
 
   return (
     <Center minHeight="100vh">
@@ -183,13 +191,12 @@ const SelectSymbolQuestion: React.FC = () => {
               }
             >
               <Center fontSize="9xl">
-                <Text
-                color={rankColor}>{currentQuestion.reading}</Text>
+                <Text color={rankColor}>{currentQuestion.reading}</Text>
               </Center>
 
               <Center fontSize="4xl">
                 <Flex>
-                  {options.map((option, index) => (
+                {options.map((option, index) => (
                     <Button
                       m={1}
                       key={index}
@@ -204,6 +211,15 @@ const SelectSymbolQuestion: React.FC = () => {
                           : "gray"
                       }
                     >
+                      <Text
+                        fontSize={10}
+                        position={"absolute"}
+                        left={"8px"}
+                        color={"gray.500"}
+                        top={"10px"}
+                      >
+                        {index + 1}
+                      </Text>
                       {option}
                     </Button>
                   ))}

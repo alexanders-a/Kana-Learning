@@ -22,7 +22,8 @@ import BackButton from "../components/buttons/BackButton";
 import {
   getRandomUniqueIndex,
   getRankColor,
-} from "../utils/symbolSelectionUtils";
+} from "../utils/trainingUtils";
+import { showRankUpdate } from "../utils/trainingUtils";
 
 const InputSoundQuestion = () => {
   const dispatch = useDispatch();
@@ -87,32 +88,19 @@ const InputSoundQuestion = () => {
         "selectedSymbolProgress",
         JSON.stringify(updatedProgress)
       );
-      if (progress === 99) {
-        showRankUpdateToast("Rank S");
-      } else if (progress === 70) {
-        showRankUpdateToast("Rank A");
-      } else if (progress === 50) {
-        showRankUpdateToast("Rank B");
-      } else if (progress === 20) {
-        showRankUpdateToast("Rank C");
-      } else if (progress === 5) {
-        showRankUpdateToast("Rank D");
-      } else if (progress === 1) {
-        showRankUpdateToast("Rank F");
-      }
     }
 
     dispatch(setShowAnswer(true));
   };
 
   const handleNextQuestion = () => {
-    dispatch(setInputValue(""));
-    dispatch(setIsCorrect(false));
-    dispatch(setShowAnswer(false));
     const newIndex = getRandomUniqueIndex(
       currentQuestionIndex,
       selectedSymbols.length
     );
+    dispatch(setInputValue(""));
+    dispatch(setIsCorrect(false));
+    dispatch(setShowAnswer(false));
     dispatch(
       setCurrentQuestionIndex(
         currentQuestionIndex === selectedSymbols.length - 1 ? 0 : newIndex
@@ -126,9 +114,9 @@ const InputSoundQuestion = () => {
       if (showAnswer === true || isCorrect === true) {
         handleNextQuestion();
       }
+      showRankUpdate(progress, showRankUpdateToast);
     }
   };
-
 
   return (
     <Center minHeight="100vh">

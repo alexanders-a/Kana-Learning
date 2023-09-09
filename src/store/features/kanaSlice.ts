@@ -2,15 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { KanaSymbol, KanaType, KanaTypeCategoty } from "../../types/types";
 
 interface KanaState {
-  symbols: KanaSymbol[];
   selectedKanaType: KanaType;
   selectedSymbols: KanaSymbol[];
-  selectedCategory: KanaTypeCategoty
-
+  selectedCategory: KanaTypeCategoty;
 }
 
 const initialState: KanaState = {
-  symbols: [],
   selectedKanaType: KanaType.Hiragana,
   selectedSymbols: [],
   selectedCategory: KanaTypeCategoty.Base,
@@ -20,12 +17,8 @@ const kanaSlice = createSlice({
   name: "kana",
   initialState,
   reducers: {
-    setSymbols: (state, action: PayloadAction<KanaSymbol[]>) => {
-      state.symbols = action.payload;
-    },
     setKanaType: (state, action: PayloadAction<KanaType>) => {
       state.selectedKanaType = action.payload;
-      state.symbols = [];
     },
     setSelectedCategory: (state, action: PayloadAction<KanaTypeCategoty>) => {
       state.selectedCategory = action.payload;
@@ -49,7 +42,6 @@ const kanaSlice = createSlice({
 
 export const {
   setKanaType,
-  setSymbols,
   setSelectedSymbols,
   setSelectedCategory,
   addSelectedSymbol,

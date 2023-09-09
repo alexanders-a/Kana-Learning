@@ -37,6 +37,10 @@ const SymbolSelectionPage: React.FC = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const sounds = ["k", "s", "t", "n", "h", "m", "y", "r"];
+  const vowels = ["a", "i", "u", "e", "o"];
+  const others = ["chi", "fu", "wa", "wo"];
+  const dakuon = ["g", "z", "d", "b", "p"];
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
@@ -56,11 +60,6 @@ const SymbolSelectionPage: React.FC = () => {
   const selectedSymbols = useSelector(
     (state: RootState) => state.kana.selectedSymbols
   );
-
-  const sounds = ["k", "s", "t", "n", "h", "m", "y", "r"];
-  const vowels = ["a", "i", "u", "e", "o"];
-  const others = ["chi", "fu", "wa", "wo"];
-  const dakuon = ["g", "z", "d", "b", "p"];
 
   const handleQuickSelect = (startsWith: string) => {
     toggleSymbolsByFilter((symbolData) => symbolData.reading[0] === startsWith);

@@ -1,6 +1,5 @@
 export interface RootState {
   kana: {
-    symbols: KanaSymbol[];
     selectedKanaType: KanaType.Hiragana | KanaType.Katakana;
     selectedSymbols: KanaSymbol[];
     selectedCategory: KanaTypeCategoty.Base | KanaTypeCategoty.Dakuon;

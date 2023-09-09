@@ -77,7 +77,7 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading }) => {
       </Center>
       <Center color={"gray.400"} fontSize="xs" position="relative">
         <Box w="50%" h="3px" borderRadius="xl" bg="gray.700">
-          <Box h="100%" w={`${progress}%`} borderRadius="xl" bg={rank} />
+          <Box h="100%" w={`${Math.min(progress, 100)}%`} borderRadius="xl" bg={rank} />
         </Box>
       </Center>
     </Box>

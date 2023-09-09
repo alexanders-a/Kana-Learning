@@ -22,15 +22,20 @@ import { RootState } from "../types/types";
 import {
   getRandomUniqueIndex,
   getRankColor,
-  shuffleArrayOptions,
-} from "../utils/symbolSelectionUtils";
+  showRankUpdate,
+} from "../utils/trainingUtils";
+import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
 import BackButton from "../components/buttons/BackButton";
+import useKeyPress from "../hooks/useKeyPress";
 
 const SelectSoundQuestion: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const goToHome = () => navigation("/");
   const toast = useToast();
+  const optionKeys = ["1", "2", "3", "4"];
+  const optionClicks = optionKeys.map(useKeyPress);
+  const nextPress = useKeyPress("Enter");
 
   const selectedSymbols = useSelector(
     (state: RootState) => state.training.questions
@@ -123,19 +128,7 @@ const SelectSoundQuestion: React.FC = () => {
         "selectedSymbolProgress",
         JSON.stringify(updatedProgress)
       );
-      if (progress === 99) {
-        showRankUpdateToast("Rank S");
-      } else if (progress === 70) {
-        showRankUpdateToast("Rank A");
-      } else if (progress === 50) {
-        showRankUpdateToast("Rank B");
-      } else if (progress === 20) {
-        showRankUpdateToast("Rank C");
-      } else if (progress === 5) {
-        showRankUpdateToast("Rank D");
-      } else if (progress === 1) {
-        showRankUpdateToast("Rank F");
-      }
+      showRankUpdate(progress, showRankUpdateToast);
     } else {
       dispatch(setShowAnswer(true));
     }
@@ -154,6 +147,22 @@ const SelectSoundQuestion: React.FC = () => {
     generateOptions();
     dispatch(setIsCorrect(false));
   };
+
+  const handleOptionKeyPress = (optionIndex: number) => {
+    if (options[optionIndex]) {
+      handleOptionClick(options[optionIndex]);
+    }
+  };
+
+  useEffect(() => {
+    if (nextPress && showAnswer) {
+      handleNextQuestion();
+    }
+    optionClicks.forEach((optionClick, index) => {
+      if (optionClick) handleOptionKeyPress(index);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nextPress, ...optionClicks]);
 
   return (
     <Center minHeight="100vh">
@@ -199,6 +208,15 @@ const SelectSoundQuestion: React.FC = () => {
                           : "gray"
                       }
                     >
+                      <Text
+                        fontSize={10}
+                        position={"absolute"}
+                        left={"8px"}
+                        color={"gray.500"}
+                        top={"10px"}
+                      >
+                        {index + 1}
+                      </Text>
                       {option}
                     </Button>
                   ))}
@@ -206,14 +224,17 @@ const SelectSoundQuestion: React.FC = () => {
               </Center>
             </Box>
             <Flex>
-              <Button m={1} w="145px" onClick={goToHome}>
+            <Button m={1} w="145px" onClick={goToHome}>
                 Back
               </Button>
-              {showAnswer && (
-                <Button w="145px" m={1} onClick={handleNextQuestion}>
-                  Next
-                </Button>
-              )}
+              <Button
+                isDisabled={!showAnswer}
+                w="145px"
+                m={1}
+                onClick={handleNextQuestion}
+              >
+                Next
+              </Button>
             </Flex>
           </Stack>
         ) : (

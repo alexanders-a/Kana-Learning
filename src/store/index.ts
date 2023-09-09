@@ -16,7 +16,6 @@ const initialProgressData: KanaSymbol[] = initialProgress
 
 const initialRootState: RootState = {
   kana: {
-    symbols: [],
     selectedKanaType: KanaType.Hiragana,
     selectedSymbols: initialProgressData,
     selectedCategory: KanaTypeCategoty.Base,
