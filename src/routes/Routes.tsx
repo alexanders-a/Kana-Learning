@@ -1,6 +1,7 @@
 import InputSoundQuestion from "../pages/InputSoundQuestionPage";
 import SelectSoundQuestion from "../pages/SelectSoundQuestionPage";
 import SelectSymbolQuestion from "../pages/SelectSymbolQuestionPage";
+import SelectSoundQuestionAudio from "../pages/SelectSymbolQuestionPageAudio";
 import SymbolSelectionPage from "../pages/SymbolSelectionPage";
 import NotFound from "./404";
 
@@ -33,6 +34,11 @@ const routes: Routes[] = [
   },
   {
     id: 5,
+    path: "/trainingSoundAudio",
+    element: <SelectSoundQuestionAudio />,
+  },
+  {
+    id: 6,
     path: "*",
     element: <NotFound />,
   },

@@ -29,8 +29,10 @@ import dakuonKatakana from "../data/dakuonKatakana.json";
 import TrainingTypeSelector from "../components/training/TrainingTypeSelector";
 import LearnButton from "../components/buttons/LearnButton";
 import DrawerButton from "../components/buttons/DrawerButton";
+import useData from "../hooks/useData";
 
 const SymbolSelectionPage: React.FC = () => {
+  const data = useData();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = useToast();
@@ -81,6 +83,10 @@ const SymbolSelectionPage: React.FC = () => {
     }
   };
 
+  const handleClearSelection = () => {
+    dispatch(setSelectedSymbols([]));
+  };
+
   const toggleSymbolsByFilter = (filterFn: (symbolData: any) => boolean) => {
     const symbolsToToggle =
       selectedKanaType === "hiragana"
@@ -103,28 +109,7 @@ const SymbolSelectionPage: React.FC = () => {
 
     dispatch(setSelectedSymbols(combinedSymbols));
   };
-
-  const handleClearSelection = () => {
-    dispatch(setSelectedSymbols([]));
-  };
-
-  const handleNextClick = () => {
-    if (selectedSymbols.length >= 3) {
-      const shuffledSymbols = shuffleArray(selectedSymbols);
-      dispatch(setQuestions(shuffledSymbols));
-      setIsReady(true);
-    } else {
-      toast({
-        title: "Not Enough Symbols",
-        description: "Please select at least 3 symbols before proceeding.",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const handleRandomSelect = () => {
+    const handleRandomSelect = () => {
     let symbolsToSelect =
       selectedKanaType === "hiragana" ? hiraganaData : katakanaData;
 
@@ -147,21 +132,23 @@ const SymbolSelectionPage: React.FC = () => {
     dispatch(setSelectedSymbols(randomSymbols));
   };
 
-  const data = (() => {
-    if (selectedKanaType === "hiragana") {
-      if (selectedCategory === "Dakuon") {
-        return dakuonHiragana;
-      } else {
-        return hiraganaData;
-      }
-    } else if (selectedKanaType === "katakana") {
-      if (selectedCategory === "Dakuon") {
-        return dakuonKatakana;
-      } else {
-        return katakanaData;
-      }
+
+  const handleNextClick = () => {
+    if (selectedSymbols.length >= 3) {
+      const shuffledSymbols = shuffleArray(selectedSymbols);
+      dispatch(setQuestions(shuffledSymbols));
+      setIsReady(true);
+    } else {
+      toast({
+        title: "Not Enough Symbols",
+        description: "Please select at least 3 symbols before proceeding.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  })();
+  };
+
 
   if (isReady) return <TrainingTypeSelector navigate={navigate} />;
 

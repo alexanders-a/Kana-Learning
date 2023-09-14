@@ -2,7 +2,10 @@ import React from "react";
 import { Box, Text, Center } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../types/types";
-import { addSelectedSymbol, removeSelectedSymbol } from "../store/features/kanaSlice";
+import {
+  addSelectedSymbol,
+  removeSelectedSymbol,
+} from "../store/features/kanaSlice";
 
 interface SymbolCardProps {
   symbol: string;
@@ -66,6 +69,7 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading }) => {
       borderColor={rank}
       onClick={handleCardClick}
       cursor="pointer"
+      position="relative"
     >
       <Center fontSize="xl">
         <Text fontWeight={"bold"} color={rank}>
@@ -77,7 +81,12 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading }) => {
       </Center>
       <Center color={"gray.400"} fontSize="xs" position="relative">
         <Box w="50%" h="3px" borderRadius="xl" bg="gray.700">
-          <Box h="100%" w={`${Math.min(progress, 100)}%`} borderRadius="xl" bg={rank} />
+          <Box
+            h="100%"
+            w={`${Math.min(progress, 100)}%`}
+            borderRadius="xl"
+            bg={rank}
+          />
         </Box>
       </Center>
     </Box>

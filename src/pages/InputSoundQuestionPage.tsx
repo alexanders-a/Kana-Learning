@@ -19,11 +19,9 @@ import {
   setShowAnswer,
 } from "../store/features/trainingSlice";
 import BackButton from "../components/buttons/BackButton";
-import {
-  getRandomUniqueIndex,
-  getRankColor,
-} from "../utils/trainingUtils";
+import { getRandomUniqueIndex, getRankColor } from "../utils/trainingUtils";
 import { showRankUpdate } from "../utils/trainingUtils";
+import { playAudio } from "../utils/audioSybmolUtils";
 
 const InputSoundQuestion = () => {
   const dispatch = useDispatch();
@@ -118,24 +116,34 @@ const InputSoundQuestion = () => {
     }
   };
 
+
+
   return (
     <Center minHeight="100vh">
       <VStack spacing={8} align="center">
-        {selectedSymbols.length ? (
+        {selectedSymbols?.length ? (
           <Stack justify="center" align="center">
             <Box
               m={1}
               p={2}
-              borderWidth="1px"
+              borderWidth="4px"
               borderRadius="3xl"
               width="300px"
               height="300px"
               borderColor={
-                isCorrect ? "green.500" : !showAnswer ? "gray.300" : "red.500"
+                isCorrect ? "green.500" : !showAnswer ? "gray.500" : "red.500"
               }
             >
               <Center fontSize="9xl">
-                <Text color={rankColor}>{currentQuestion.symbol}</Text>
+                <Text
+                  cursor="pointer"
+                  onClick={() => {
+                    playAudio(currentQuestion?.symbol);
+                  }}
+                  color={rankColor}
+                >
+                  {currentQuestion?.symbol}
+                </Text>
               </Center>
 
               <Center fontSize="4xl">
@@ -144,7 +152,7 @@ const InputSoundQuestion = () => {
                   type="text"
                   value={
                     isCorrect === false && showAnswer
-                      ? currentQuestion.reading
+                      ? currentQuestion?.reading
                       : inputValue
                   }
                   onChange={(e) => dispatch(setInputValue(e.target.value))}

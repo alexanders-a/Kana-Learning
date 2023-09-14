@@ -22,6 +22,7 @@ import { RootState } from "../types/types";
 import {
   getRandomUniqueIndex,
   getRankColor,
+  handleKeyDown,
   showRankUpdate,
 } from "../utils/trainingUtils";
 import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
@@ -173,7 +174,7 @@ const SelectSoundQuestion: React.FC = () => {
             <Box
               m={1}
               p={2}
-              borderWidth="1px"
+              borderWidth="4px"
               borderRadius="3xl"
               width="300px"
               height="300px"
@@ -186,17 +187,22 @@ const SelectSoundQuestion: React.FC = () => {
                     : "gray.300"
                   : "gray.300"
               }
+              onKeyDown={handleKeyDown}
             >
               <Center fontSize="9xl">
-                <Text color={rankColor}>{currentQuestion.symbol}</Text>
+                <Text cursor="pointer" color={rankColor}>
+                  {currentQuestion.symbol}
+                </Text>
               </Center>
 
               <Center fontSize="4xl">
                 <Flex>
                   {options.map((option, index) => (
                     <Button
+                      _focus={{
+                        outline: "none",
+                      }}
                       m={1}
-                      key={index}
                       onClick={() => handleOptionClick(option)}
                       colorScheme={
                         showAnswer
@@ -224,7 +230,7 @@ const SelectSoundQuestion: React.FC = () => {
               </Center>
             </Box>
             <Flex>
-            <Button m={1} w="145px" onClick={goToHome}>
+              <Button m={1} w="145px" onClick={goToHome}>
                 Back
               </Button>
               <Button

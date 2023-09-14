@@ -43,3 +43,13 @@ export const getRandomUniqueIndex = (
   } while (newIndex === currentIndex);
   return newIndex;
 };
+
+export const handleKeyDown = (event: {
+  key: string;
+  preventDefault: () => void;
+}) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+  }
+};
+

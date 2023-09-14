@@ -28,8 +28,10 @@ import {
 import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
 import BackButton from "../components/buttons/BackButton";
 import useKeyPress from "../hooks/useKeyPress";
+import { playAudio } from "../utils/audioSybmolUtils";
+import { FaVolumeUp } from "react-icons/fa";
 
-const SelectSymbolQuestion: React.FC = () => {
+const SelectSymbolQuestionAudio: React.FC = () => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const goToHome = () => navigation("/");
@@ -67,6 +69,7 @@ const SelectSymbolQuestion: React.FC = () => {
   useEffect(() => {
     dispatch(setQuestions(selectedSymbols));
     generateOptions();
+    playAudio(currentQuestion.symbol);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, selectedSymbols, currentQuestionIndex]);
@@ -192,10 +195,19 @@ const SelectSymbolQuestion: React.FC = () => {
               }
               onKeyDown={handleKeyDown}
             >
-              <Center fontSize="9xl">
-                <Text color={rankColor}>{currentQuestion.reading}</Text>
-              </Center>
-
+              {!showAnswer ? (
+                <Center m="32px" fontSize="9xl">
+                  <FaVolumeUp
+                    cursor="pointer"
+                    color={rankColor}
+                    onClick={() => playAudio(currentQuestion.symbol)}
+                  />
+                </Center>
+              ) : (
+                <Center fontSize="9xl">
+                  <Text color={rankColor}>{currentQuestion.reading}</Text>
+                </Center>
+              )}
               <Center fontSize="4xl">
                 <Flex>
                   {options.map((option, index) => (
@@ -250,4 +262,4 @@ const SelectSymbolQuestion: React.FC = () => {
   );
 };
 
-export default SelectSymbolQuestion;
+export default SelectSymbolQuestionAudio;

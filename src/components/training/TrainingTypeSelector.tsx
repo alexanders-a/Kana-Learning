@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  Box,
-  Center,
-  Flex,
-  Input,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Center, Flex, Input, Text } from "@chakra-ui/react";
+import { FaVolumeUp } from "react-icons/fa";
 
 interface TrainingTypeSelectorProps {
   navigate: (to: string) => void;
@@ -15,127 +9,79 @@ interface TrainingTypeSelectorProps {
 const TrainingTypeSelector: React.FC<TrainingTypeSelectorProps> = ({
   navigate,
 }) => {
+  const blocks = [
+    {
+      title: "ツ",
+      nav: "/training",
+      inputs: [],
+      detals: "input",
+    },
+    {
+      title: "se",
+      nav: "/trainingSymbol",
+      inputs: [{ text: "を" }, { text: "せ" }, { text: "く" }],
+    },
+    {
+      title: "ほ",
+      nav: "/trainingSound",
+      inputs: [{ text: "he" }, { text: "ho" }, { text: "ha" }],
+    },
+    {
+      title: "ほ",
+      nav: "/trainingSoundAudio",
+      inputs: [{ text: "プ1" }, { text: "エ" }, { text: "ホ" }],
+      detals: "icon",
+    },
+  ];
+
   return (
-    <VStack justify="center" align="center" minH={"100vh"} spacing={4}>
-      <Box
-        m={1}
-        p={2}
-        borderWidth={"2px"}
-        borderRadius="xl"
-        width="200px"
-        height="200px"
-        borderColor={"gray.600"}
-        cursor="pointer"
-        onClick={() => navigate("/training")}
-      >
-        <Center fontSize="7xl">
-          <Text fontWeight={"bold"}>ツ</Text>
-        </Center>
-        <Center color={"gray.400"} fontSize="xs">
-          <Input w={"100px"} h={"50px"} />
-        </Center>
-      </Box>
-      <Box
-        m={1}
-        p={2}
-        borderWidth={"2px"}
-        borderRadius="xl"
-        width="200px"
-        height="200px"
-        borderColor={"gray.600"}
-        cursor="pointer"
-        onClick={() => navigate("/trainingSymbol")}
-      >
-        <Center fontSize="7xl">
-          <Text fontWeight={"bold"}>se</Text>
-        </Center>
-        <Flex>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>を</Text>
-          </Center>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>せ</Text>
-          </Center>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>く</Text>
-          </Center>
-        </Flex>
-      </Box>
-      <Box
-        m={1}
-        p={2}
-        borderWidth={"2px"}
-        borderRadius="xl"
-        width="200px"
-        height="200px"
-        borderColor={"gray.600"}
-        cursor="pointer"
-        onClick={() => navigate("/trainingSound")}
-      >
-        <Center fontSize="7xl">
-          <Text fontWeight={"bold"}>ほ</Text>
-        </Center>
-        <Flex>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>he</Text>
-          </Center>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>ho</Text>
-          </Center>
-          <Center
-            m={1}
-            w="50px"
-            h="50px"
-            borderWidth={"1px"}
-            borderRadius="sm"
-            fontSize="20px"
-            color={"gray.400"}
-          >
-            <Text>ha</Text>
-          </Center>
-        </Flex>
-      </Box>
-    </VStack>
+    <Flex justify="center" align="center" minH="100vh" flexWrap="wrap">
+      {blocks.map((block, index) => (
+        <Box
+          key={index}
+          m={1}
+          p={2}
+          borderWidth="2px"
+          borderRadius="xl"
+          width="200px"
+          height="200px"
+          borderColor="gray.600"
+          cursor="pointer"
+          onClick={() => navigate(block.nav)}
+        >
+          {block.detals !== "icon" ? (
+            <Center fontSize="7xl">
+              <Text fontWeight="bold">{block.title}</Text>
+            </Center>
+          ) : (
+            <Center m={5} fontSize="7xl">
+              <FaVolumeUp />
+            </Center>
+          )}
+          <Flex>
+            {block.inputs.map((input, inputIndex) => (
+              <Center
+                key={inputIndex}
+                m={1}
+                w="50px"
+                h="50px"
+                borderWidth="1px"
+                borderRadius="sm"
+                fontSize="20px"
+                color="gray.400"
+              >
+                <Text>{input.text}</Text>
+              </Center>
+            ))}
+          </Flex>
+          {block.detals === "input" && (
+            <Center color={"gray.400"} fontSize="xs">
+              <Input w={"100px"} h={"50px"} />
+            </Center>
+          )}
+        </Box>
+      ))}
+    </Flex>
   );
 };
 
