@@ -9,6 +9,7 @@ import {
   Flex,
   Box,
   useToast,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -37,6 +38,7 @@ const SelectSoundQuestion: React.FC = () => {
   const optionKeys = ["1", "2", "3", "4"];
   const optionClicks = optionKeys.map(useKeyPress);
   const nextPress = useKeyPress("Enter");
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   const selectedSymbols = useSelector(
     (state: RootState) => state.training.questions
@@ -214,15 +216,17 @@ const SelectSoundQuestion: React.FC = () => {
                           : "gray"
                       }
                     >
-                      <Text
-                        fontSize={10}
-                        position={"absolute"}
-                        left={"8px"}
-                        color={"gray.500"}
-                        top={"10px"}
-                      >
-                        {index + 1}
-                      </Text>
+                      {!isMobile && (
+                        <Text
+                          fontSize={10}
+                          position={"absolute"}
+                          left={"8px"}
+                          color={"gray.500"}
+                          top={"10px"}
+                        >
+                          {index + 1}
+                        </Text>
+                      )}
                       {option}
                     </Button>
                   ))}

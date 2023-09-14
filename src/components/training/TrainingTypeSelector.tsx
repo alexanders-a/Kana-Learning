@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Center, Flex, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Input,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { FaVolumeUp } from "react-icons/fa";
 
 interface TrainingTypeSelectorProps {
@@ -9,13 +16,9 @@ interface TrainingTypeSelectorProps {
 const TrainingTypeSelector: React.FC<TrainingTypeSelectorProps> = ({
   navigate,
 }) => {
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
+
   const blocks = [
-    {
-      title: "ツ",
-      nav: "/training",
-      inputs: [],
-      detals: "input",
-    },
     {
       title: "se",
       nav: "/trainingSymbol",
@@ -35,7 +38,28 @@ const TrainingTypeSelector: React.FC<TrainingTypeSelectorProps> = ({
   ];
 
   return (
-    <Flex justify="center" align="center" minH="100vh" flexWrap="wrap">
+    <Flex m={"5vh"} justify="center" align="center" minH="90vh" flexWrap="wrap">
+      {!isMobile && (
+        <Box
+          key="training"
+          m={1}
+          p={2}
+          borderWidth="2px"
+          borderRadius="xl"
+          width="200px"
+          height="200px"
+          borderColor="gray.600"
+          cursor="pointer"
+          onClick={() => navigate("/training")}
+        >
+          <Center fontSize="7xl">
+            <Text fontWeight="bold">ツ</Text>
+          </Center>
+          <Center color={"gray.400"} fontSize="xs">
+            <Input w={"100px"} h={"50px"} />
+          </Center>
+        </Box>
+      )}
       {blocks.map((block, index) => (
         <Box
           key={index}
@@ -74,11 +98,6 @@ const TrainingTypeSelector: React.FC<TrainingTypeSelectorProps> = ({
               </Center>
             ))}
           </Flex>
-          {block.detals === "input" && (
-            <Center color={"gray.400"} fontSize="xs">
-              <Input w={"100px"} h={"50px"} />
-            </Center>
-          )}
         </Box>
       ))}
     </Flex>

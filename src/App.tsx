@@ -3,6 +3,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import store from "./store";
 import routes from "./routes/Routes";
+import { CSSReset } from "@chakra-ui/react";
 
 const theme = extendTheme({
   config: {
@@ -13,7 +14,8 @@ const theme = extendTheme({
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
+    <ChakraProvider resetCSS theme={theme}>
+      <CSSReset />
       <Provider store={store}>
         <Router>
           <Routes>
