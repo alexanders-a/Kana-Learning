@@ -6,11 +6,12 @@ import dakuonHiragana from "../data/dakuonHiragana.json";
 import dakuonKatakana from "../data/dakuonKatakana.json";
 
 const useData = () => {
+
   const selectedCategory = useSelector(
     (state: RootState) => state.kana.selectedCategory
-  );
-  const selectedKanaType = useSelector(
-    (state: RootState) => state.kana.selectedKanaType
+    );
+    const selectedKanaType = useSelector(
+      (state: RootState) => state.kana.selectedKanaType
   );
 
   if (selectedKanaType === "hiragana") {

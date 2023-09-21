@@ -30,6 +30,7 @@ import TrainingTypeSelector from "../components/training/TrainingTypeSelector";
 import LearnButton from "../components/buttons/LearnButton";
 import DrawerButton from "../components/buttons/DrawerButton";
 import useData from "../hooks/useData";
+import WelcomeSlider from "../components/welcome/WelcomeSlider";
 
 const SymbolSelectionPage: React.FC = () => {
   const data = useData();
@@ -43,6 +44,7 @@ const SymbolSelectionPage: React.FC = () => {
   const vowels = ["a", "i", "u", "e", "o"];
   const others = ["chi", "fu", "wa", "wo"];
   const dakuon = ["g", "z", "d", "b", "p"];
+  const hasSeenWelcome = localStorage.getItem("welcomeToken");
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
@@ -109,7 +111,7 @@ const SymbolSelectionPage: React.FC = () => {
 
     dispatch(setSelectedSymbols(combinedSymbols));
   };
-    const handleRandomSelect = () => {
+  const handleRandomSelect = () => {
     let symbolsToSelect =
       selectedKanaType === "hiragana" ? hiraganaData : katakanaData;
 
@@ -132,7 +134,6 @@ const SymbolSelectionPage: React.FC = () => {
     dispatch(setSelectedSymbols(randomSymbols));
   };
 
-
   const handleNextClick = () => {
     if (selectedSymbols.length >= 3) {
       const shuffledSymbols = shuffleArray(selectedSymbols);
@@ -149,9 +150,8 @@ const SymbolSelectionPage: React.FC = () => {
     }
   };
 
-
+  if (!hasSeenWelcome) return <WelcomeSlider />;
   if (isReady) return <TrainingTypeSelector navigate={navigate} />;
-
   return (
     <Stack mt={isMobile ? 5 : 0} minH={"100vh"} justify="center" align="center">
       <Flex maxWidth={"450px"} justify="space-between" align="center">
@@ -200,9 +200,10 @@ const SymbolSelectionPage: React.FC = () => {
               direction="row"
               wrap="wrap"
             >
-              {data?.map((symbolData: any) => (
+              {data?.map((symbolData: any, index) => (
                 <SymbolCard
-                  key={symbolData.symbol}
+                  key={index}
+                  index={index}
                   symbol={symbolData.symbol}
                   reading={symbolData.reading}
                 />

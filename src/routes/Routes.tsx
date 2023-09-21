@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import InputSoundQuestion from "../pages/InputSoundQuestionPage";
 import SelectSoundQuestion from "../pages/SelectSoundQuestionPage";
 import SelectSymbolQuestion from "../pages/SelectSymbolQuestionPage";
 import SelectSoundQuestionAudio from "../pages/SelectSymbolQuestionPageAudio";
 import SymbolSelectionPage from "../pages/SymbolSelectionPage";
 import NotFound from "./404";
+import Loading from "../components/loading/Loading";
 
 interface Routes {
   id: number;
@@ -15,7 +17,11 @@ const routes: Routes[] = [
   {
     id: 1,
     path: "/",
-    element: <SymbolSelectionPage />,
+    element: (
+      <Suspense fallback={<Loading />}>
+        <SymbolSelectionPage />
+      </Suspense>
+    ),
   },
   {
     id: 2,

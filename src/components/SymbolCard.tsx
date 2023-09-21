@@ -6,13 +6,15 @@ import {
   addSelectedSymbol,
   removeSelectedSymbol,
 } from "../store/features/kanaSlice";
+import P1 from "../anim/pres1";
 
 interface SymbolCardProps {
+  index: number;
   symbol: string;
   reading: string;
 }
 
-const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading }) => {
+const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading, index }) => {
   const dispatch = useDispatch();
 
   const selectedSymbols = useSelector(
@@ -58,38 +60,40 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading }) => {
   };
 
   return (
-    <Box
-      m={1}
-      p={2}
-      opacity={isSelected || selectedSymbols.length === 0 ? "1" : "0.7"}
-      borderWidth={isSelected ? "3px" : "1px"}
-      borderRadius="xl"
-      width="70px"
-      height="70px"
-      borderColor={rank}
-      onClick={handleCardClick}
-      cursor="pointer"
-      position="relative"
-    >
-      <Center fontSize="xl">
-        <Text fontWeight={"bold"} color={rank}>
-          {symbol}
-        </Text>
-      </Center>
-      <Center color={"gray.400"} fontSize="xs">
-        <Text>{reading}</Text>
-      </Center>
-      <Center color={"gray.400"} fontSize="xs" position="relative">
-        <Box w="50%" h="3px" borderRadius="xl" bg="gray.700">
-          <Box
-            h="100%"
-            w={`${Math.min(progress, 100)}%`}
-            borderRadius="xl"
-            bg={rank}
-          />
-        </Box>
-      </Center>
-    </Box>
+    <P1 isEven={index % 2 === 0}>
+      <Box
+        m={1}
+        p={2}
+        opacity={isSelected || selectedSymbols.length === 0 ? "1" : "0.7"}
+        borderWidth={isSelected ? "3px" : "1px"}
+        borderRadius="xl"
+        width="70px"
+        height="70px"
+        borderColor={rank}
+        onClick={handleCardClick}
+        cursor="pointer"
+        position="relative"
+      >
+        <Center fontSize="xl">
+          <Text fontWeight={"bold"} color={rank}>
+            {symbol}
+          </Text>
+        </Center>
+        <Center color={"gray.400"} fontSize="xs">
+          <Text>{reading}</Text>
+        </Center>
+        <Center color={"gray.400"} fontSize="xs" position="relative">
+          <Box w="50%" h="3px" borderRadius="xl" bg="gray.700">
+            <Box
+              h="100%"
+              w={`${Math.min(progress, 100)}%`}
+              borderRadius="xl"
+              bg={rank}
+            />
+          </Box>
+        </Center>
+      </Box>
+    </P1>
   );
 };
 
