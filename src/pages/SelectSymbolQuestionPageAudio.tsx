@@ -71,7 +71,7 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   useEffect(() => {
     dispatch(setQuestions(selectedSymbols));
     generateOptions();
-    playAudio(currentQuestion.symbol);
+    playAudio(currentQuestion?.symbol);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, selectedSymbols, currentQuestionIndex]);
@@ -79,11 +79,11 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   const generateOptions = () => {
     if (!currentQuestion) return;
     const availableSymbols = selectedSymbols.filter(
-      (symbol) => symbol.reading.charAt(0) === currentQuestion.reading.charAt(0)
+      (symbol) => symbol.reading.charAt(0) === currentQuestion?.reading.charAt(0)
     );
 
     const otherAvailableSymbols = availableSymbols.filter(
-      (symbol) => symbol.symbol !== currentQuestion.symbol
+      (symbol) => symbol.symbol !== currentQuestion?.symbol
     );
 
     let randomOptions: string[];
@@ -96,7 +96,7 @@ const SelectSymbolQuestionAudio: React.FC = () => {
     } else {
       randomOptions = getRandomOptions(
         selectedSymbols
-          .filter((symbol) => symbol.symbol !== currentQuestion.symbol)
+          .filter((symbol) => symbol.symbol !== currentQuestion?.symbol)
           .map((symbol) => symbol.symbol),
         3
       );
@@ -116,7 +116,7 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   const showRankUpdateToast = (newRank: string) => {
     toast({
       title: "Rank Updated!",
-      description: `Your new rank: ${newRank} - ${currentQuestion.symbol}`,
+      description: `Your new rank: ${newRank} - ${currentQuestion?.symbol}`,
       status: "success",
       duration: 5000,
       isClosable: true,
@@ -124,13 +124,13 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   };
 
   const handleOptionClick = (option: string) => {
-    if (option === currentQuestion.symbol) {
+    if (option === currentQuestion?.symbol) {
       dispatch(setShowAnswer(true));
       dispatch(setIsCorrect(true));
       const updatedProgress = {
         ...selectedSymbolProgress,
-        [currentQuestion.symbol]:
-          (selectedSymbolProgress[currentQuestion.symbol] || 0) + 1,
+        [currentQuestion?.symbol]:
+          (selectedSymbolProgress[currentQuestion?.symbol] || 0) + 1,
       };
 
       localStorage.setItem(
@@ -146,11 +146,11 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   const handleNextQuestion = () => {
     const newIndex = getRandomUniqueIndex(
       currentQuestionIndex,
-      selectedSymbols.length
+      selectedSymbols?.length
     );
     dispatch(
       setCurrentQuestionIndex(
-        currentQuestionIndex === selectedSymbols.length - 1 ? 0 : newIndex
+        currentQuestionIndex === selectedSymbols?.length - 1 ? 0 : newIndex
       )
     );
     generateOptions();

@@ -9,7 +9,11 @@ const BackButton: React.FC<BackButtonProps> = ({ goToHome }) => {
     <VStack
       m={1}
       p={2}
-      borderWidth={"2px"}
+      w={'300px'}
+      h={'300px'}
+      align='center'
+      justify='center'
+      borderWidth={"3px"}
       borderRadius="xl"
       borderColor={"gray.600"}
     >
