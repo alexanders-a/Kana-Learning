@@ -31,6 +31,8 @@ const KanaTypeSelector: React.FC = () => {
     if (newKanaType !== selectedCategory) {
       dispatch(setSelectedCategory(newKanaType));
       dispatch(setSelectedSymbols([]));
+      localStorage.setItem("selectedSymbols", JSON.stringify(null));
+
     }
   };
 

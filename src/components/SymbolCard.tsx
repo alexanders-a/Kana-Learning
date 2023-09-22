@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Center } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../types/types";
+import { useDispatch } from "react-redux";
+import { KanaSymbol } from "../types/types";
 import {
   addSelectedSymbol,
   removeSelectedSymbol,
@@ -12,14 +12,16 @@ interface SymbolCardProps {
   index: number;
   symbol: string;
   reading: string;
+  selectedSymbols: KanaSymbol[];
 }
 
-const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading, index }) => {
+const SymbolCard: React.FC<SymbolCardProps> = ({
+  symbol,
+  reading,
+  index,
+  selectedSymbols,
+}) => {
   const dispatch = useDispatch();
-
-  const selectedSymbols = useSelector(
-    (state: RootState) => state.kana.selectedSymbols
-  );
 
   const isSelected = selectedSymbols.some(
     (selectedSymbol) => selectedSymbol.symbol === symbol
@@ -52,11 +54,22 @@ const SymbolCard: React.FC<SymbolCardProps> = ({ symbol, reading, index }) => {
   }
 
   const handleCardClick = () => {
+    let updatedSelectedSymbols;
+
     if (isSelected) {
       dispatch(removeSelectedSymbol(symbol));
+      updatedSelectedSymbols = selectedSymbols.filter(
+        (selectedSymbol) => selectedSymbol.symbol !== symbol
+      );
     } else {
       dispatch(addSelectedSymbol({ symbol, reading }));
+      updatedSelectedSymbols = [...selectedSymbols, { symbol, reading }];
     }
+
+    localStorage.setItem(
+      "selectedSymbols",
+      JSON.stringify(updatedSelectedSymbols)
+    );
   };
 
   return (

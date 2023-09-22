@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSelectedSymbols } from "../store/features/kanaSlice";
-import { setQuestions } from "../store/features/trainingSlice";
+import { setCurrentQuestionIndex, setQuestions } from "../store/features/trainingSlice";
 import { RootState } from "../types/types";
 import { useMediaQuery } from "@chakra-ui/react";
 import { shuffleArray } from "../utils/symbolSelectionUtils";
@@ -88,6 +88,7 @@ const SymbolSelectionPage: React.FC = () => {
 
   const handleClearSelection = () => {
     dispatch(setSelectedSymbols([]));
+    localStorage.setItem("selectedSymbols", JSON.stringify(null));
   };
 
   const toggleSymbolsByFilter = (filterFn: (symbolData: any) => boolean) => {
@@ -139,6 +140,7 @@ const SymbolSelectionPage: React.FC = () => {
     if (selectedSymbols.length >= 3) {
       const shuffledSymbols = shuffleArray(selectedSymbols);
       dispatch(setQuestions(shuffledSymbols));
+      dispatch(setCurrentQuestionIndex(0));
       setIsReady(true);
     } else {
       toast({
@@ -207,6 +209,7 @@ const SymbolSelectionPage: React.FC = () => {
                   index={index}
                   symbol={symbolData.symbol}
                   reading={symbolData.reading}
+                  selectedSymbols={selectedSymbols}
                 />
               ))}
             </Flex>

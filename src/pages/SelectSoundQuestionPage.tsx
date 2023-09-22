@@ -168,6 +168,8 @@ const SelectSoundQuestion: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextPress, ...optionClicks]);
 
+  console.log(selectedSymbols, currentQuestionIndex);
+
   return (
     <Center minHeight="100vh">
       <VStack spacing={8} align="center">
@@ -204,6 +206,7 @@ const SelectSoundQuestion: React.FC = () => {
                 <Flex>
                   {options.map((option, index) => (
                     <Button
+                      key={index}
                       _focus={{
                         outline: "none",
                       }}
