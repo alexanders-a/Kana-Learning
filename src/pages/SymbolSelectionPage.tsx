@@ -41,12 +41,12 @@ const SymbolSelectionPage: React.FC = () => {
   const vowels = ["a", "i", "u", "e", "o"];
   const others = ["chi", "fu", "wa", "wo"];
   const dakuon = ["g", "z", "d", "b", "p"];
-  const hasSeenWelcome = localStorage.getItem("welcomeToken");
   const hiraganaData = db.hiragana;
   const katakanaData = db.katakana;
   const dakuonHiragana = db.dakuonHiragana;
   const dakuonKatakana = db.dakuonKatakana;
-  
+  const hasSeenWelcome = localStorage.getItem("welcomeToken");
+
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };

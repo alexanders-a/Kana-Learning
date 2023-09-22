@@ -23,6 +23,7 @@ const KanaTypeSelector: React.FC = () => {
     if (newKanaType !== selectedKanaType) {
       dispatch(setKanaType(newKanaType));
       dispatch(setSelectedSymbols([]));
+      localStorage.setItem("selectedSymbols", JSON.stringify(null));
     }
   };
 
