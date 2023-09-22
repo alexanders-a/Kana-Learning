@@ -22,6 +22,7 @@ import BackButton from "../components/buttons/BackButton";
 import { getRandomUniqueIndex, getRankColor } from "../utils/trainingUtils";
 import { showRankUpdate } from "../utils/trainingUtils";
 import { playAudio } from "../utils/audioSybmolUtils";
+import P2 from "../anim/TriggerAnim";
 
 const InputSoundQuestion = () => {
   const dispatch = useDispatch();
@@ -116,8 +117,6 @@ const InputSoundQuestion = () => {
     }
   };
 
-
-
   return (
     <Center minHeight="100vh">
       <VStack spacing={8} align="center">
@@ -135,15 +134,17 @@ const InputSoundQuestion = () => {
               }
             >
               <Center fontSize="9xl">
-                <Text
-                  cursor="pointer"
-                  onClick={() => {
-                    playAudio(currentQuestion?.symbol);
-                  }}
-                  color={rankColor}
-                >
-                  {currentQuestion?.symbol}
-                </Text>
+                <P2 correct={isCorrect}>
+                  <Text
+                    cursor="pointer"
+                    onClick={() => {
+                      playAudio(currentQuestion?.symbol);
+                    }}
+                    color={rankColor}
+                  >
+                    {currentQuestion?.symbol}
+                  </Text>
+                </P2>
               </Center>
 
               <Center fontSize="4xl">

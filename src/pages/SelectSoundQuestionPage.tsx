@@ -29,6 +29,7 @@ import {
 import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
 import BackButton from "../components/buttons/BackButton";
 import useKeyPress from "../hooks/useKeyPress";
+import P2 from "../anim/TriggerAnim";
 
 const SelectSoundQuestion: React.FC = () => {
   const dispatch = useDispatch();
@@ -192,9 +193,11 @@ const SelectSoundQuestion: React.FC = () => {
               onKeyDown={handleKeyDown}
             >
               <Center fontSize="9xl">
-                <Text cursor="pointer" color={rankColor}>
-                  {currentQuestion.symbol}
-                </Text>
+                <P2 correct={isCorrect}>
+                  <Text cursor="pointer" color={rankColor}>
+                    {currentQuestion.symbol}
+                  </Text>
+                </P2>
               </Center>
 
               <Center fontSize="4xl">

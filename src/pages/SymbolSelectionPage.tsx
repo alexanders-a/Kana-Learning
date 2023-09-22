@@ -22,15 +22,12 @@ import SymbolCard from "../components/SymbolCard";
 import KanaTypeSelector from "../components/KanaTypeSelector";
 import QuickSelectButtons from "../components/symbolSelection/QuickSelectButtons";
 import SelectionButtons from "../components/symbolSelection/SelectionButtons";
-import hiraganaData from "../data/hiragana.json";
-import katakanaData from "../data/katakana.json";
-import dakuonHiragana from "../data/dakuonHiragana.json";
-import dakuonKatakana from "../data/dakuonKatakana.json";
 import TrainingTypeSelector from "../components/training/TrainingTypeSelector";
 import LearnButton from "../components/buttons/LearnButton";
 import DrawerButton from "../components/buttons/DrawerButton";
 import useData from "../hooks/useData";
 import WelcomeSlider from "../components/welcome/WelcomeSlider";
+import db from "../data/db.json";
 
 const SymbolSelectionPage: React.FC = () => {
   const data = useData();
@@ -45,7 +42,11 @@ const SymbolSelectionPage: React.FC = () => {
   const others = ["chi", "fu", "wa", "wo"];
   const dakuon = ["g", "z", "d", "b", "p"];
   const hasSeenWelcome = localStorage.getItem("welcomeToken");
-
+  const hiraganaData = db.hiragana;
+  const katakanaData = db.katakana;
+  const dakuonHiragana = db.dakuonHiragana;
+  const dakuonKatakana = db.dakuonKatakana;
+  
   const handleDrawerOpen = () => {
     setIsDrawerOpen(true);
   };

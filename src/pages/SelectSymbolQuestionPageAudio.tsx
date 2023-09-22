@@ -79,7 +79,8 @@ const SelectSymbolQuestionAudio: React.FC = () => {
   const generateOptions = () => {
     if (!currentQuestion) return;
     const availableSymbols = selectedSymbols.filter(
-      (symbol) => symbol.reading.charAt(0) === currentQuestion?.reading.charAt(0)
+      (symbol) =>
+        symbol.reading.charAt(0) === currentQuestion?.reading.charAt(0)
     );
 
     const otherAvailableSymbols = availableSymbols.filter(
@@ -207,7 +208,7 @@ const SelectSymbolQuestionAudio: React.FC = () => {
                 </Center>
               ) : (
                 <Center fontSize="9xl">
-                  <Text color={rankColor}>{currentQuestion.reading}</Text>
+                    <Text color={rankColor}>{currentQuestion.reading}</Text>
                 </Center>
               )}
               <Center fontSize="4xl">

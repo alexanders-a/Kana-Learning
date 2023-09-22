@@ -1,30 +1,26 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../types/types";
-import hiraganaData from "../data/hiragana.json";
-import katakanaData from "../data/katakana.json";
-import dakuonHiragana from "../data/dakuonHiragana.json";
-import dakuonKatakana from "../data/dakuonKatakana.json";
+import db from "../data/db.json";
 
 const useData = () => {
-
   const selectedCategory = useSelector(
     (state: RootState) => state.kana.selectedCategory
-    );
-    const selectedKanaType = useSelector(
-      (state: RootState) => state.kana.selectedKanaType
+  );
+  const selectedKanaType = useSelector(
+    (state: RootState) => state.kana.selectedKanaType
   );
 
   if (selectedKanaType === "hiragana") {
     if (selectedCategory === "Dakuon") {
-      return dakuonHiragana;
+      return db.dakuonHiragana;
     } else {
-      return hiraganaData;
+      return db.hiragana;
     }
   } else if (selectedKanaType === "katakana") {
     if (selectedCategory === "Dakuon") {
-      return dakuonKatakana;
+      return db.dakuonKatakana;
     } else {
-      return katakanaData;
+      return db.katakana;
     }
   }
 

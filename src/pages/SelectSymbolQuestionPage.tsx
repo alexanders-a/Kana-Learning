@@ -29,6 +29,7 @@ import {
 import { shuffleArrayOptions } from "../utils/symbolSelectionUtils";
 import BackButton from "../components/buttons/BackButton";
 import useKeyPress from "../hooks/useKeyPress";
+import P2 from "../anim/TriggerAnim";
 
 const SelectSymbolQuestion: React.FC = () => {
   const dispatch = useDispatch();
@@ -195,7 +196,9 @@ const SelectSymbolQuestion: React.FC = () => {
               onKeyDown={handleKeyDown}
             >
               <Center fontSize="9xl">
-                <Text color={rankColor}>{currentQuestion.reading}</Text>
+                <P2 correct={isCorrect}>
+                  <Text color={rankColor}>{currentQuestion.reading}</Text>
+                </P2>
               </Center>
 
               <Center fontSize="4xl">
@@ -215,7 +218,7 @@ const SelectSymbolQuestion: React.FC = () => {
                           : "gray"
                       }
                     >
-                     {!isMobile && (
+                      {!isMobile && (
                         <Text
                           fontSize={10}
                           position={"absolute"}

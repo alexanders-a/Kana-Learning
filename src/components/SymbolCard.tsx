@@ -6,7 +6,7 @@ import {
   addSelectedSymbol,
   removeSelectedSymbol,
 } from "../store/features/kanaSlice";
-import P1 from "../anim/pres1";
+import P1 from "../anim/SymbolsAnim";
 
 interface SymbolCardProps {
   index: number;
