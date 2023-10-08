@@ -9,7 +9,7 @@ interface KanaState {
 
 const initialState: KanaState = {
   selectedKanaType: KanaType.Hiragana,
-  selectedSymbols: JSON.parse(localStorage.getItem("selectedSymbols") || "[]"),
+  selectedSymbols: [],
   selectedCategory: KanaTypeCategoty.Base,
 };
 

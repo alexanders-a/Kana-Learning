@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -14,11 +13,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setSelectedSymbols } from "../store/features/kanaSlice";
-import { setCurrentQuestionIndex, setQuestions } from "../store/features/trainingSlice";
+import {
+  setCurrentQuestionIndex,
+  setQuestions,
+} from "../store/features/trainingSlice";
 import { RootState } from "../types/types";
 import { useMediaQuery } from "@chakra-ui/react";
 import { shuffleArray } from "../utils/symbolSelectionUtils";
-import SymbolCard from "../components/SymbolCard";
 import KanaTypeSelector from "../components/KanaTypeSelector";
 import QuickSelectButtons from "../components/symbolSelection/QuickSelectButtons";
 import SelectionButtons from "../components/symbolSelection/SelectionButtons";
@@ -28,6 +29,7 @@ import DrawerButton from "../components/buttons/DrawerButton";
 import useData from "../hooks/useData";
 import WelcomeSlider from "../components/welcome/WelcomeSlider";
 import db from "../data/db.json";
+import SymbolsList from "../components/symbolsList/SymbolsList";
 
 const SymbolSelectionPage: React.FC = () => {
   const data = useData();
@@ -193,29 +195,7 @@ const SymbolSelectionPage: React.FC = () => {
           </DrawerOverlay>
         </Drawer>
       </Flex>
-      <Stack justify="center" align="center" minH="80vh">
-        <Flex>
-          <Box flex={1} p={4}>
-            <Flex
-              maxWidth={"450px"}
-              justify="center"
-              align="center"
-              direction="row"
-              wrap="wrap"
-            >
-              {data?.map((symbolData: any, index) => (
-                <SymbolCard
-                  key={index}
-                  index={index}
-                  symbol={symbolData.symbol}
-                  reading={symbolData.reading}
-                  selectedSymbols={selectedSymbols}
-                />
-              ))}
-            </Flex>
-          </Box>
-        </Flex>
-      </Stack>
+      <SymbolsList selectedSymbols={selectedSymbols} data={data} />
     </Stack>
   );
 };

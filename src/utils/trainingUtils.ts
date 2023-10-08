@@ -1,5 +1,5 @@
 export const getRankColor = (progress: number) => {
-  if (progress >= 99) {
+  if (progress >= 150) {
     return "#C53030"; // Rank S
   } else if (progress >= 70) {
     return "#6B46C1"; // Rank A
@@ -18,7 +18,7 @@ export const showRankUpdate = (
   progress: number,
   showRankUpdateToast: (rank: string) => void
 ) => {
-  if (progress === 99) {
+  if (progress === 150) {
     showRankUpdateToast("Rank S");
   } else if (progress === 70) {
     showRankUpdateToast("Rank A");

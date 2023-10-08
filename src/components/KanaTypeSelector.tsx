@@ -38,7 +38,7 @@ const KanaTypeSelector: React.FC = () => {
 
   return (
     <Box padding={0}>
-      <ButtonGroup isAttached variant="outline">
+      <ButtonGroup isAttached  variant="outline">
         <Button
           m={1}
           p={1}

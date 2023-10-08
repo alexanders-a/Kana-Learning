@@ -30,7 +30,6 @@ const SymbolCard: React.FC<SymbolCardProps> = ({
   const selectedSymbolProgress = JSON.parse(
     localStorage.getItem("selectedSymbolProgress") || "{}"
   );
-
   const progress = selectedSymbolProgress[symbol] || 0;
 
   let rank:
@@ -41,7 +40,7 @@ const SymbolCard: React.FC<SymbolCardProps> = ({
     | "#6B46C1"
     | "#B7791F" = "gray.300";
 
-  if (progress >= 99) {
+  if (progress >= 150) {
     rank = "#C53030";
   } else if (progress >= 70) {
     rank = "#6B46C1";
@@ -54,22 +53,11 @@ const SymbolCard: React.FC<SymbolCardProps> = ({
   }
 
   const handleCardClick = () => {
-    let updatedSelectedSymbols;
-
     if (isSelected) {
       dispatch(removeSelectedSymbol(symbol));
-      updatedSelectedSymbols = selectedSymbols.filter(
-        (selectedSymbol) => selectedSymbol.symbol !== symbol
-      );
     } else {
       dispatch(addSelectedSymbol({ symbol, reading }));
-      updatedSelectedSymbols = [...selectedSymbols, { symbol, reading }];
     }
-
-    localStorage.setItem(
-      "selectedSymbols",
-      JSON.stringify(updatedSelectedSymbols)
-    );
   };
 
   return (
